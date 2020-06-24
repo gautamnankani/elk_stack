@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana-service
+  labels:
+    app: kibana
+spec:
+  selector:
+    app: kibana
+  type: NodePort
+  ports:
+  - port: 5601
+    targetPort: 5601
+    nodePort: 30002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana-deploy
+  labels:
+    app: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      name: kibana-pod
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - name: kibana-con
+        image: kibana:7.7.1
+
+         
