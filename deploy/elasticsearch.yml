@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  labels:
+    app: elasticsearch
+spec:
+  selector:
+    app: elasticsearch
+  type: NodePort
+  ports:
+  - port: 9200
+    targetPort: 9200
+    nodePort: 30001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: es-deploy
+  labels:
+    app: elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      name: es-pod
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+      - name: es-con
+        image: elasticsearch:7.7.1
+        env:
+        - name: "discovery.type"
+          value: "single-node"
+        volumeMounts:
+        - name: elastic-storage
+          mountPath: /var/lib/elasticsearch
+      volumes:
+      - name: elastic-storage
+        persistentVolumeClaim:
+          claimName: es-vol
+         
