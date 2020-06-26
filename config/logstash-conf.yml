@@ -6,41 +6,38 @@ metadata:
     app: logstash
 data:
   logstash.conf: |-
-    input{
+    input {
       beats {
         port => 5044
-        id => "my_plugin_id"
       }
     }
     filter {
       grok {
-        match => [ "message" , "%{COMBINEDAPACHELOG}+%{GREEDYDATA:extra_fields}"]
-        overwrite => [ "message" ]
+        match => [ "message" , "%{COMBINEDAPACHELOG}"]
       }
       mutate {
-        convert => ["response", "integer"]
         convert => ["bytes", "integer"]
-        convert => ["responsetime", "float"]
       }
       geoip {
         source => "clientip"
-        target => "geoip"
-        add_tag => [ "geoip" ]
       }
       date {
         match => [ "timestamp" , "dd/MMM/YYYY:HH:mm:ss Z" ]
+        locale => en
         remove_field => [ "timestamp" ]
       }
       useragent {
         source => "agent"
+        target => "useragent"
       }
     }
     output {
       elasticsearch {
         hosts => ["elasticsearch"]
-        index => "%{[@metadata][beat]}-%{[@metadata][version]}" 
+        index => "webdb"
+        document_type=> "weblog" 
       }
-      stout {
+      stdout {
          codec => "rubydebug"
       }
     }
