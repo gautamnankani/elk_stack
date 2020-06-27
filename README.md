@@ -12,7 +12,7 @@
 
 **Kubernetes**: Kubernetes is an open-source container orchestration engine for automating deployment, scaling, and management of containerized applications. The open-source project is hosted by the Cloud Native Computing Foundation (**[CNCF](https://www.cncf.io/about)).**
 
-**SETUP ELASTIC SEARCH:**
+## SETUP ELASTIC SEARCH:
 
 > It is needed to be created first as it contains the database, before doing   anything we must have database to actually store the logs
 
@@ -92,7 +92,7 @@
                persistentVolumeClaim:
                  claimName: es-vol
 
-**SETUP KIBANA:**
+## SETUP KIBANA:
 
 > Creating Service and Deployment :
 
@@ -137,7 +137,7 @@
              - name: kibana-con
                image: kibana:7.7.1
 
-**SETUP LOGSTASH:**
+## SETUP LOGSTASH:
 
 > Creating configMap for managing logstash pipeline
 
@@ -274,17 +274,17 @@ Kustomization.yml____________________________________
        apiVersion: kustomize.config.k8s.io/v1beta1
        kind: Kustomization
        resources:
-       - es_vol.yml
-       - logstash-conf.yml
-       - elasticsearch.yml
-       - kibana.yml
-       - logstash.yml
+       - volumes/es_vol.yml
+       - config/logstash-conf.yml
+       - deploy/elasticsearch.yml
+       - deploy/kibana.yml
+       - deploy/logstash.yml
 
 **Now to Launch whole setup in one go use the command:**
 
-         **Kubectl create -f .
+         kubectl create -f .
 
-**BONUS: FileBeats setup**
+## BONUS: FileBeats setup**
 
 > previously i told you about using beats to get data, and give it to logstash
 
