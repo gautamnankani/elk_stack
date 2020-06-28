@@ -282,7 +282,7 @@ Kustomization.yml____________________________________
 
 **Now to Launch whole setup in one go use the command:**
 
-         kubectl create -f .
+         kubectl create -k .
 
 ## BONUS: FileBeats setup**
 
