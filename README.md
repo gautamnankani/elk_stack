@@ -22,7 +22,7 @@
 
 > Code for PVC(dynamic):
 
-   es_vol.yml______________________________________
+   volumes/es_vol.yml______________________________________
 
        apiVersion: v1
        kind: PersistentVolumeClaim
@@ -42,7 +42,7 @@
 
 >  Code for Service and Deployment:
 
-   Elasticsearch.yml__________________________________
+   deploy/elasticsearch.yml__________________________________
 
        ---
        apiVersion: v1
@@ -96,7 +96,7 @@
 
 > Creating Service and Deployment :
 
-   Kibana.yml_______________________________________
+  deploy/kibana.yml_______________________________________
 
         ---
        apiVersion: v1
@@ -151,7 +151,7 @@
          logstash.conf:  |-
                   &lt;pipeline file data(all the lines must be indented)>
 
-logstash.conf___________________________________________
+  config/logstash.conf___________________________________________
 
 
        apiVersion: v1
@@ -205,7 +205,7 @@ logstash.conf___________________________________________
 
 > Expose two ports one for connecting to Beats and other for giving info about logstash(using browser)
 
-logstash.yml__________________________________________
+  deploy/logstash.yml__________________________________________
 
        ---
        apiVersion: v1
@@ -268,7 +268,7 @@ logstash.yml__________________________________________
 
 > Finally creating Kustomization for creating al the setup in one go 
 
-Kustomization.yml____________________________________
+  kustomization.yml____________________________________
 
 
        apiVersion: kustomize.config.k8s.io/v1beta1
